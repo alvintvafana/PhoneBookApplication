@@ -26,7 +26,7 @@ namespace PhoneBookApplication.UnitTest
             return await Task.Run(() => phoneBookAggregates.FirstOrDefault(a => a.Name == a.Name));
         }
 
-        public Task<IEnumerable<Entry>> SearchPhoneBookAsync(Guid id)
+        public Task<IEnumerable<Entry>> SearchPhoneBookAsync(Guid id,string name)
         {
             throw new NotImplementedException();
         }

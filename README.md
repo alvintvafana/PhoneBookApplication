@@ -14,3 +14,17 @@ Technologies
 - Asp.Net Core 2.2
 - SQlite
 - Swagger	
+
+SetUp
+======
+1. Clone the repo and open the command line
+
+2. cd PhoneBookApplication
+
+3. Run dotnet build
+
+4. cd PhoneBookApplication.Api
+
+5. Run dotnet run
+
+6. Browse to http://localhost:5000/swagger/index.html
