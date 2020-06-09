@@ -1,11 +1,10 @@
-﻿using PhoneBookApplication.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PhoneBookApplication.Domain.Entities;
 using PhoneBookApplication.Domain.Services;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace PhoneBookApplication.Data
 {
@@ -31,7 +30,7 @@ namespace PhoneBookApplication.Data
             var phoneBook = await _phoneBookContext.PhoneBooks.Where(a => a.Id == id).Include(b => b.Entries).FirstOrDefaultAsync();
             if (phoneBook == null)
                 return null;
-            var entries = phoneBook.Entries.Where(a => a.Name.ToLower().Contains(name.ToLower())).ToList(); // EF query to be optimised
+            var entries = phoneBook.Entries.Where(a => a.Name.ToLower().Contains(name.ToLower())).ToList(); 
              
             return entries;
         }

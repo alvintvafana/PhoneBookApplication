@@ -4,8 +4,6 @@ using PhoneBookApplication.Domain.Commands;
 using PhoneBookApplication.Domain.Queries;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PhoneBookApplication.Api.Controllers
@@ -14,12 +12,12 @@ namespace PhoneBookApplication.Api.Controllers
     [ApiController]
     public class EntryController : ControllerBase
     {
-        private readonly Messages _messages;
-        public EntryController(Messages messages)
+        private readonly IMediator _mediator;
+        public EntryController(IMediator mediator)
         {
-            _messages = messages;
+            _mediator = mediator;
         }
-        [HttpGet("/search-phonebook-entries")]
+        [HttpGet("/SearchPhoneBookQuery")]
         public async Task<IEnumerable> SearchPhoneBookAsync(Guid phoneBookId, string name)
         {
             var query = new SearchPhoneBookQuery
@@ -27,11 +25,11 @@ namespace PhoneBookApplication.Api.Controllers
                 PhoneBookId = phoneBookId,
                 Name=name
             };
-            var result = await _messages.DispatchAsync(query);
+            var result = await _mediator.DispatchAsync(query);
             return result;
         }
 
-        [HttpPost("/insert-entry")]
+        [HttpPost("/InsertEntryCommand")]
         public async Task<IActionResult> InsectEntryAsync([FromBody] InsertEntryDto insertEntryDto)
         {
             var command = new InsertEntryCommand
@@ -41,12 +39,12 @@ namespace PhoneBookApplication.Api.Controllers
                 Name = insertEntryDto.Name
             };
 
-            await _messages.DispatchAsync(command);
+            await _mediator.DispatchAsync(command);
 
             return Ok();
         }
 
-        [HttpPost("/update-entry")]
+        [HttpPost("/UpdateEntryCommand")]
         public async Task<IActionResult> UpdateEntryAsync([FromBody] UpdateEntryDto updateEntryDto)
         {
             var command = new UpdateEntryCommand
@@ -57,12 +55,12 @@ namespace PhoneBookApplication.Api.Controllers
                 Name = updateEntryDto.Name
             };
 
-            await _messages.DispatchAsync(command);
+            await _mediator.DispatchAsync(command);
 
             return Ok();
         }
 
-        [HttpPost("/delete-entry")]
+        [HttpPost("/DeleteEntryCommand")]
         public async Task<IActionResult> DeleteEntryAsync([FromBody] DeleteEntryDto deleteEntryDto)
         {
             var command = new DeleteEntryCommand
@@ -71,7 +69,7 @@ namespace PhoneBookApplication.Api.Controllers
                 EntryId = deleteEntryDto.EntryId
             };
 
-            await _messages.DispatchAsync(command);
+            await _mediator.DispatchAsync(command);
 
             return Ok();
         }

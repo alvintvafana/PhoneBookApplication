@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using PhoneBookApplication.Data;
 using PhoneBookApplication.Domain.CommandHandlers;
-using PhoneBookApplication.Domain.Commands;
-using PhoneBookApplication.Domain.Entities;
-using PhoneBookApplication.Domain.Queries;
 using PhoneBookApplication.Domain.QueryHandlers;
 using PhoneBookApplication.Domain.Services;
 using Swashbuckle.AspNetCore.Swagger;
@@ -31,7 +21,6 @@ namespace PhoneBookApplication.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -39,15 +28,11 @@ namespace PhoneBookApplication.Api
             services.AddDbContext<PhoneBookContext>
              (options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IPhoneBookRepository, PhoneBookRepository>();
-            services.AddScoped<ICommandHandler<CreatePhoneBookCommand>, CreatePhoneBookCommandHandler>();
-            services.AddScoped<ICommandHandler<InsertEntryCommand>, InsertEntryCommandHandler>();
-            services.AddScoped<ICommandHandler<DeleteEntryCommand>, DeleteEntryCommandHandler>();
-            services.AddScoped<ICommandHandler<UpdateEntryCommand>, UpdateEntryCommandHandler>();
-            services.AddScoped<IQueryHandler<GetPhoneBooksQuery, IEnumerable<PhoneBookAggregateRoot>>, GetGetPhoneBooksQueryHandler>();
-            services.AddScoped<IQueryHandler<SearchPhoneBookQuery, IEnumerable<Entry>>, SearchPhoneBookQueryHandler>();
+            services.AddTransient<IPhoneBookRepository, PhoneBookRepository>();
+            services.AddCommandQueryHandlers(typeof(IQueryHandler<,>), "PhoneBookApplication.Domain");
+            services.AddCommandQueryHandlers(typeof(ICommandHandler<>), "PhoneBookApplication.Domain");
 
-            services.AddSingleton<Messages>();
+            services.AddSingleton<IMediator, Mediator>();
 
             services.AddSwaggerGen(c =>
             {
@@ -55,7 +40,6 @@ namespace PhoneBookApplication.Api
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
