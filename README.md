@@ -27,4 +27,4 @@ SetUp
 
 5. Run dotnet run
 
-6. Browse to http://localhost:5000/swagger/index.html
+6. Browse to http://localhost:5003/swagger/index.html
