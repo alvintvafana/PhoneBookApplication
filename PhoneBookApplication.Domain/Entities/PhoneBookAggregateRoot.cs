@@ -35,12 +35,12 @@ namespace PhoneBookApplication.Domain.Entities
             entries = new List<Entry>();
         }
 
-        public void InsertEntry(string name, int phoneNumber)
+        public void InsertEntry(string name, string phoneNumber)
         {
             entries.Add(new Entry(name, phoneNumber));
         }
 
-        public void UpdateEntry(Guid id,string name, int phoneNumber)
+        public void UpdateEntry(Guid id,string name, string phoneNumber)
         {
             var entry = entries.Where(a => a.Id == id).FirstOrDefault();
             entry.Name = name;

@@ -8,7 +8,7 @@ namespace PhoneBookApplication.Common.Exceptions
     {
         public ValidateException(string message) : base(message)
         {
-
+            
         }
     }
 }

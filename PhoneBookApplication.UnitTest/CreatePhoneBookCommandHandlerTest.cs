@@ -35,7 +35,7 @@ namespace PhoneBookApplication.UnitTest
             await createPhoneBookCommandHandler.HandleAsync(createPhoneBookCommand);
 
             //Then
-            Assert.True(((PhoneBookRepositoryMock)_phoneBookRepositoryMock).phoneBookAggregates.Any(a => a.Name == _phoneBookName));
+            Assert.Contains(((PhoneBookRepositoryMock)_phoneBookRepositoryMock).phoneBookAggregates, a => a.Name == _phoneBookName);
         }
 
         [Fact]

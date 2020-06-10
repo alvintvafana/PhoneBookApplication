@@ -26,7 +26,7 @@ namespace PhoneBookApplication.UnitTest
         {
             //Given
             var phoneBook = new PhoneBookAggregateRoot { Name = _phoneBookName };
-            phoneBook.InsertEntry("TestUser", 111111111);
+            phoneBook.InsertEntry("TestUser", "0817810008");
             var entryId = phoneBook.Entries.FirstOrDefault().Id;
 
             await _phoneBookRepositoryMock.AddAsync(phoneBook);

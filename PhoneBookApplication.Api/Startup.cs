@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PhoneBookApplication.Api.MiddleWare;
 using PhoneBookApplication.Data;
 using PhoneBookApplication.Domain.CommandHandlers;
 using PhoneBookApplication.Domain.QueryHandlers;
@@ -54,6 +55,7 @@ namespace PhoneBookApplication.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
             app.UseMvc();
         }
     }

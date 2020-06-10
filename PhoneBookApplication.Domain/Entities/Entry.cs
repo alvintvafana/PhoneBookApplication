@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace PhoneBookApplication.Domain.Entities
 {
@@ -17,12 +18,22 @@ namespace PhoneBookApplication.Domain.Entities
                 name = value ?? throw new ValidateException("name cannot be null");
             }
         }
-        public int PhoneNumber { get; set; }
+        private string phoneNumber;
+        public string PhoneNumber 
+        {
+            get { return phoneNumber; }
+            set
+            {
+                if(!Regex.IsMatch(value, "^[0-9]+$"))
+                    throw new ValidateException("that doesnot look like a valid phone number");
+                phoneNumber = value;
+            }
+        }
 
         public Entry()
         {
         }
-        public Entry(string name, int phoneNumber)
+        public Entry(string name, string phoneNumber)
             : base(Guid.NewGuid())
         {
             Name = name;

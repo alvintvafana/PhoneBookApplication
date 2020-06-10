@@ -24,7 +24,7 @@ namespace PhoneBookApplication.UnitTest
             //Given
             var phoneBook = new PhoneBookAggregateRoot { Name = _phoneBookName };
             var entryName = "TestUser";
-            var entryPhoneNumber = 0817810008;
+            var entryPhoneNumber = "0817810008";
 
 
             await _phoneBookRepositoryMock.AddAsync(phoneBook);
@@ -47,7 +47,7 @@ namespace PhoneBookApplication.UnitTest
         public async System.Threading.Tasks.Task InsertEntryCommandHandler_Fail()
         {
             var entryName = "TestUser";
-            var entryPhoneNumber = 111111111;
+            var entryPhoneNumber = "0817810008";
 
             var phoneBook = new PhoneBookAggregateRoot { Name = _phoneBookName };
             phoneBook.InsertEntry(entryName, entryPhoneNumber);

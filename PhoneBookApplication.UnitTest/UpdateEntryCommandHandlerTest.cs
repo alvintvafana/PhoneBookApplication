@@ -23,7 +23,7 @@ namespace PhoneBookApplication.UnitTest
         {
             //Given
             var entryName = "TestUser";
-            var entryPhoneNumber = 111111111;
+            var entryPhoneNumber = "0817810008";
             var entryName2= "TestUser2";
 
             var phoneBook = new PhoneBookAggregateRoot { Name = _phoneBookName };
@@ -50,7 +50,7 @@ namespace PhoneBookApplication.UnitTest
         public async System.Threading.Tasks.Task UpdateEntryCommandHandlerTest_Fail()
         {
             var entryName = "TestUser";
-            var entryPhoneNumber = 111111111;
+            var entryPhoneNumber = "0817810008";
 
             var phoneBook = new PhoneBookAggregateRoot { Name = _phoneBookName };
             phoneBook.InsertEntry(entryName, entryPhoneNumber);
